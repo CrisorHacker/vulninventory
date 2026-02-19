@@ -2366,6 +2366,11 @@ export default function App() {
     URL.revokeObjectURL(url);
   }
 
+  async function loadExcelJS() {
+    const module = await import("exceljs");
+    return module.default || module;
+  }
+
   async function downloadImportTemplate(format) {
     const headers = [
       "title",
@@ -2410,11 +2415,17 @@ export default function App() {
     }
 
     if (format === "xlsx") {
-      const XLSX = await import("xlsx");
-      const ws = XLSX.utils.json_to_sheet([sampleRow, emptyRow], { header: headers });
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Hallazgos");
-      XLSX.writeFile(wb, "vulninventory_import_template.xlsx");
+      const ExcelJS = await loadExcelJS();
+      const workbook = new ExcelJS.Workbook();
+      const sheet = workbook.addWorksheet("Hallazgos");
+      sheet.addRow(headers);
+      sheet.addRow(headers.map((header) => sampleRow[header] ?? ""));
+      sheet.addRow(headers.map(() => ""));
+      const buffer = await workbook.xlsx.writeBuffer();
+      const blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      downloadBlob(blob, "vulninventory_import_template.xlsx");
       return;
     }
 
@@ -2453,11 +2464,22 @@ export default function App() {
   }
 
   async function exportXLSX(data, filename) {
-    const XLSX = await import("xlsx");
-    const ws = XLSX.utils.json_to_sheet(data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Hallazgos");
-    XLSX.writeFile(wb, `${filename}.xlsx`);
+    if (!data.length) {
+      return;
+    }
+    const ExcelJS = await loadExcelJS();
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet("Hallazgos");
+    const headers = Object.keys(data[0]);
+    sheet.addRow(headers);
+    data.forEach((row) => {
+      sheet.addRow(headers.map((header) => row[header] ?? ""));
+    });
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    downloadBlob(blob, `${filename}.xlsx`);
   }
 
   function handleExport(format) {
@@ -2656,11 +2678,42 @@ export default function App() {
           return flat;
         });
       } else if (format === "xlsx") {
-        const XLSX = await import("xlsx");
+        const ExcelJS = await loadExcelJS();
         const buffer = await file.arrayBuffer();
-        const wb = XLSX.read(buffer);
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        rows = XLSX.utils.sheet_to_json(ws);
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.load(buffer);
+        const sheet = workbook.worksheets[0];
+        if (!sheet) {
+          rows = [];
+        } else {
+          const headerRow = sheet.getRow(1);
+          const headers = headerRow.values
+            .slice(1)
+            .map((value) => String(value ?? "").trim())
+            .filter((value) => value);
+          rows = [];
+          sheet.eachRow((row, rowNumber) => {
+            if (rowNumber === 1) return;
+            const values = row.values.slice(1);
+            const obj = {};
+            headers.forEach((header, index) => {
+              const cellValue = values[index];
+              if (cellValue && typeof cellValue === "object") {
+                obj[header] =
+                  cellValue.text ||
+                  cellValue.richText?.map((chunk) => chunk.text).join("") ||
+                  cellValue.result ||
+                  String(cellValue);
+              } else {
+                obj[header] = cellValue ?? "";
+              }
+            });
+            const hasContent = Object.values(obj).some((value) => String(value).trim());
+            if (hasContent) {
+              rows.push(obj);
+            }
+          });
+        }
       } else if (format === "sarif") {
         const text = await file.text();
         const sarif = JSON.parse(text);
