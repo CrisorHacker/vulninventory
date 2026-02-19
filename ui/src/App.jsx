@@ -2366,11 +2366,6 @@ export default function App() {
     URL.revokeObjectURL(url);
   }
 
-  async function loadExcelJS() {
-    const module = await import("exceljs");
-    return module.default || module;
-  }
-
   async function downloadImportTemplate(format) {
     const headers = [
       "title",
@@ -2414,21 +2409,6 @@ export default function App() {
       return;
     }
 
-    if (format === "xlsx") {
-      const ExcelJS = await loadExcelJS();
-      const workbook = new ExcelJS.Workbook();
-      const sheet = workbook.addWorksheet("Hallazgos");
-      sheet.addRow(headers);
-      sheet.addRow(headers.map((header) => sampleRow[header] ?? ""));
-      sheet.addRow(headers.map(() => ""));
-      const buffer = await workbook.xlsx.writeBuffer();
-      const blob = new Blob([buffer], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
-      downloadBlob(blob, "vulninventory_import_template.xlsx");
-      return;
-    }
-
     const csvContent = [
       headers.join(","),
       headers.map((header) => `"${String(sampleRow[header] || "").replace(/"/g, '""')}"`).join(","),
@@ -2464,22 +2444,8 @@ export default function App() {
   }
 
   async function exportXLSX(data, filename) {
-    if (!data.length) {
-      return;
-    }
-    const ExcelJS = await loadExcelJS();
-    const workbook = new ExcelJS.Workbook();
-    const sheet = workbook.addWorksheet("Hallazgos");
-    const headers = Object.keys(data[0]);
-    sheet.addRow(headers);
-    data.forEach((row) => {
-      sheet.addRow(headers.map((header) => row[header] ?? ""));
-    });
-    const buffer = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([buffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-    downloadBlob(blob, `${filename}.xlsx`);
+    // XLSX export removed for security reasons.
+    return;
   }
 
   function handleExport(format) {
@@ -2516,8 +2482,6 @@ export default function App() {
       exportCSV(exportData, filename);
     } else if (format === "json") {
       exportJSON(exportData, filename);
-    } else if (format === "xlsx") {
-      exportXLSX(exportData, filename);
     }
   }
 
@@ -2525,7 +2489,6 @@ export default function App() {
     const name = file.name.toLowerCase();
     if (name.endsWith(".csv")) return "csv";
     if (name.endsWith(".json")) return "json";
-    if (name.endsWith(".xlsx") || name.endsWith(".xls")) return "xlsx";
     if (name.endsWith(".nessus") || name.endsWith(".xml")) return "xml";
     if (name.endsWith(".sarif")) return "sarif";
     return "csv";
@@ -2677,43 +2640,6 @@ export default function App() {
           });
           return flat;
         });
-      } else if (format === "xlsx") {
-        const ExcelJS = await loadExcelJS();
-        const buffer = await file.arrayBuffer();
-        const workbook = new ExcelJS.Workbook();
-        await workbook.xlsx.load(buffer);
-        const sheet = workbook.worksheets[0];
-        if (!sheet) {
-          rows = [];
-        } else {
-          const headerRow = sheet.getRow(1);
-          const headers = headerRow.values
-            .slice(1)
-            .map((value) => String(value ?? "").trim())
-            .filter((value) => value);
-          rows = [];
-          sheet.eachRow((row, rowNumber) => {
-            if (rowNumber === 1) return;
-            const values = row.values.slice(1);
-            const obj = {};
-            headers.forEach((header, index) => {
-              const cellValue = values[index];
-              if (cellValue && typeof cellValue === "object") {
-                obj[header] =
-                  cellValue.text ||
-                  cellValue.richText?.map((chunk) => chunk.text).join("") ||
-                  cellValue.result ||
-                  String(cellValue);
-              } else {
-                obj[header] = cellValue ?? "";
-              }
-            });
-            const hasContent = Object.values(obj).some((value) => String(value).trim());
-            if (hasContent) {
-              rows.push(obj);
-            }
-          });
-        }
       } else if (format === "sarif") {
         const text = await file.text();
         const sarif = JSON.parse(text);
@@ -4568,9 +4494,6 @@ export default function App() {
                       <button className="dropdown-item" type="button" onClick={() => handleExport("json")}>
                         📋 JSON (.json)
                       </button>
-                      <button className="dropdown-item" type="button" onClick={() => handleExport("xlsx")}>
-                        📊 Excel (.xlsx)
-                      </button>
                     </div>
                   )}
                 </div>
@@ -5247,13 +5170,6 @@ export default function App() {
                           >
                             ⬇️ Descargar plantilla JSON
                           </button>
-                          <button
-                            className="btn btn-ghost btn-sm"
-                            type="button"
-                            onClick={() => downloadImportTemplate("xlsx")}
-                          >
-                            ⬇️ Descargar plantilla Excel
-                          </button>
                         </div>
                         <div
                           className="import-dropzone"
@@ -5279,7 +5195,7 @@ export default function App() {
                             id="import-file-input"
                             type="file"
                             hidden
-                            accept=".csv,.json,.xlsx,.xls,.xml,.nessus,.sarif"
+                            accept=".csv,.json,.xml,.nessus,.sarif"
                             onChange={(event) => {
                               const file = event.target.files[0];
                               if (file) {
@@ -5297,7 +5213,7 @@ export default function App() {
                               </svg>
                               <p>Arrastra un archivo o haz click para seleccionar</p>
                               <span className="import-dropzone-hint">
-                                CSV, JSON, Excel, Nessus (.nessus), Burp XML, SARIF
+                                CSV, JSON, Nessus (.nessus), Burp XML, SARIF
                               </span>
                             </>
                           ) : (
@@ -5305,7 +5221,6 @@ export default function App() {
                               <span className="import-file-icon">
                                 {importFormat === "csv" && "📄"}
                                 {importFormat === "json" && "📋"}
-                                {importFormat === "xlsx" && "📊"}
                                 {importFormat === "nessus" && "🔒"}
                                 {importFormat === "burp" && "🕷"}
                                 {importFormat === "sarif" && "📄"}
