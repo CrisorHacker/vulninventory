@@ -1,0 +1,99 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: vuln_inventory
+      POSTGRES_USER: vulnuser
+      POSTGRES_PASSWORD: vulnpass
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ./api
+    environment:
+      DATABASE_URL: postgresql+psycopg://vulnuser:vulnpass@db:5432/vuln_inventory
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      API_KEY: ${API_KEY}
+      API_KEYS: ${API_KEYS}
+      JWT_SECRET: ${JWT_SECRET}
+      REGISTRATION_ENABLED: ${REGISTRATION_ENABLED}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      RATE_LIMIT_PER_MIN: ${RATE_LIMIT_PER_MIN}
+      AUDIT_LOGS_ENABLED: ${AUDIT_LOGS_ENABLED}
+      REDIS_URL: redis://redis:6379/0
+      LOGIN_MAX_ATTEMPTS: ${LOGIN_MAX_ATTEMPTS}
+      JWT_EXPIRES_MIN: ${JWT_EXPIRES_MIN}
+    depends_on:
+      - db
+      - redis
+
+  worker:
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+      args:
+        OSV_VERSION: ${OSV_VERSION}
+        VULNAPI_VERSION: ${VULNAPI_VERSION}
+    environment:
+      DATABASE_URL: postgresql+psycopg://vulnuser:vulnpass@db:5432/vuln_inventory
+      API_BASE_URL: http://api:8000
+      API_KEY: ${API_KEY}
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - db
+      - api
+      - redis
+    command: ["python", "-m", "app.main", "--mode", "queue"]
+
+  ui:
+    build:
+      context: ./ui
+    environment:
+      VITE_API_BASE_URL: https://${CADDY_DOMAIN}/api
+      VITE_API_KEY: ${API_KEY}
+    depends_on:
+      - api
+
+  caddy:
+    image: caddy:2
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CADDY_DOMAIN: ${CADDY_DOMAIN}
+      CADDY_EMAIL: ${CADDY_EMAIL}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+      - ui
+
+  backup:
+    build:
+      context: ./deploy/backup
+    environment:
+      POSTGRES_DB: vuln_inventory
+      POSTGRES_USER: vulnuser
+      POSTGRES_PASSWORD: vulnpass
+      DB_HOST: db
+      DB_PORT: 5432
+      BACKUP_DIR: /backup/data
+    volumes:
+      - backup_data:/backup/data
+    depends_on:
+      - db
+
+  redis:
+    image: redis:7
+
+volumes:
+  db_data:
+  caddy_data:
+  caddy_config:
+  backup_data:

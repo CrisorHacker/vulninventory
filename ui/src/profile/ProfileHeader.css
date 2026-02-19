@@ -1,0 +1,111 @@
+.profile-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 24px;
+  border-radius: 18px;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition-base);
+}
+
+.profile-header__avatar {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--accent-primary-subtle);
+  background: radial-gradient(circle at top, var(--bg-tertiary), var(--bg-input));
+  display: grid;
+  place-items: center;
+}
+
+.profile-header__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-header__avatar-fallback {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, #0ea5e9, var(--accent-primary));
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.profile-header__avatar-action {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--accent-primary-subtle);
+  color: var(--text-primary);
+  border: none;
+  opacity: 0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.profile-header__avatar:hover .profile-header__avatar-action,
+.profile-header__avatar-action:focus {
+  opacity: 1;
+}
+
+.profile-header__camera {
+  width: 28px;
+  height: 28px;
+}
+
+.profile-header__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-primary);
+}
+
+.profile-header__title-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.profile-header__name {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.profile-header__badge {
+  padding: 4px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+  background: var(--accent-primary-subtle);
+  color: var(--accent-primary);
+  border: 1px solid var(--border-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.profile-header__subtitle {
+  color: var(--text-secondary);
+}
+
+.profile-header__email {
+  color: var(--accent-primary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+@media (max-width: 720px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

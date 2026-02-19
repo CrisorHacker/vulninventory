@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://seguridadweb.local/schemas/finding.schema.json",
+  "title": "Unified Finding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source",
+    "scan",
+    "finding",
+    "asset",
+    "timestamps"
+  ],
+  "properties": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tool", "tool_version"],
+      "properties": {
+        "tool": {"type": "string"},
+        "tool_version": {"type": "string"},
+        "rule_id": {"type": "string"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "scan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scan_type", "status"],
+      "properties": {
+        "scan_type": {
+          "type": "string",
+          "enum": ["inventory", "web", "api", "deps", "container", "network"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["queued", "running", "succeeded", "failed", "canceled"]
+        },
+        "config": {"type": "object"}
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "name"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["web_app", "api", "host", "repo", "container", "network_range"]
+        },
+        "name": {"type": "string"},
+        "uri": {"type": "string", "format": "uri"},
+        "tags": {"type": "array", "items": {"type": "string"}},
+        "metadata": {"type": "object"},
+        "project_id": {"type": "integer", "minimum": 1}
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "title", "severity", "status"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["vuln", "misconfig", "info", "license", "compliance"]
+        },
+        "title": {"type": "string"},
+        "description": {"type": "string"},
+        "severity": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low", "info"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["open", "triaged", "accepted", "fixed", "false_positive"]
+        },
+        "cvss": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "score": {"type": "number", "minimum": 0, "maximum": 10},
+            "vector": {"type": "string"}
+          }
+        },
+        "cve": {"type": "string"},
+        "cwe": {"type": "string"},
+        "owasp": {"type": "string"},
+        "fingerprint": {"type": "string"}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "request": {"type": "string"},
+        "response": {"type": "string"},
+        "artifact_uri": {"type": "string"},
+        "metadata": {"type": "object"}
+      }
+    },
+    "remediation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "summary": {"type": "string"},
+        "steps": {"type": "string"},
+        "references": {"type": "array", "items": {"type": "string", "format": "uri"}},
+        "fix_version": {"type": "string"}
+      }
+    },
+    "timestamps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["detected_at"],
+      "properties": {
+        "detected_at": {"type": "string", "format": "date-time"},
+        "started_at": {"type": "string", "format": "date-time"},
+        "finished_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  }
+}

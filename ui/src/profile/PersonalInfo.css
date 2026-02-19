@@ -1,0 +1,60 @@
+.personal-info {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  border: 1px solid var(--border-primary);
+  transition: var(--transition-base);
+}
+
+.personal-info__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.personal-info__note {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.personal-info__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 20px;
+}
+
+.personal-info__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.personal-info__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.personal-info__icon {
+  width: 16px;
+  height: 16px;
+  color: var(--accent-primary);
+}
+
+.personal-info__value {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+@media (max-width: 720px) {
+  .personal-info__grid {
+    grid-template-columns: 1fr;
+  }
+}
