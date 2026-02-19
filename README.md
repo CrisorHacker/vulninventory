@@ -50,9 +50,6 @@ VulnInventory is a vulnerability management platform designed for cybersecurity 
 
 ## 📸 Screenshots
 
-> Add screenshots to `docs/screenshots/` and reference them here.
-> Recommended: dashboard, findings, assets, import wizard, vulndb, scans.
-
 ## 🚀 Quick Start
 
 ### Prerequisites
