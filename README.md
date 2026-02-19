@@ -31,7 +31,7 @@ VulnInventory is a vulnerability management platform designed for cybersecurity 
 
 - **Free and open source** — No licensing fees, no vendor lock-in
 - **Multi-tenant** — Manage multiple clients/organizations securely
-- **Import-friendly** — Nessus, Qualys, Burp, SARIF, CSV, JSON, Excel
+- **Import-friendly** — Nessus, Qualys, Burp, SARIF, CSV, JSON
 - **CVE-aware** — Built-in vulnerability catalog with NVD integration
 - **Consultant-focused** — Built by pentesters, for pentesters
 
@@ -42,7 +42,7 @@ VulnInventory is a vulnerability management platform designed for cybersecurity 
 | **Findings** | Full lifecycle management, CVSS scoring, CWE/OWASP, comments, assignments |
 | **Assets** | Per-project tracking, environment/criticality tagging, associations |
 | **Scans** | Queue-based with Wapiti, Nuclei, OSV Scanner, VulnAPI |
-| **Import/Export** | CSV, JSON, Excel, Nessus XML, Burp XML, SARIF |
+| **Import/Export** | CSV, JSON, Nessus XML, Burp XML, SARIF |
 | **VulnDB Catalog** | CVE dictionary, auto-fill forms, custom templates |
 | **Multi-Tenant** | Organizations, projects, roles (Admin/Analyst/Viewer) |
 | **Security** | httpOnly cookies, CSRF protection, scoped API keys, rate limiting |
@@ -161,7 +161,7 @@ Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
 - [x] Multi-tenant organizations
 - [x] Finding lifecycle management
 - [x] Scan queue with worker
-- [x] Import/Export (CSV, JSON, Excel, Nessus, Burp, SARIF)
+- [x] Import/Export (CSV, JSON, Nessus, Burp, SARIF)
 - [x] VulnDB catalog
 - [x] Audit logging
 - [x] httpOnly cookie auth + CSRF
