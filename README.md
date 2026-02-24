@@ -48,7 +48,13 @@ VulnInventory es una plataforma de gestión de vulnerabilidades diseñada para c
 | **Seguridad** | Cookies httpOnly, CSRF, API keys, rate limiting |
 | **Auditoría** | Trazabilidad de acciones de usuarios |
 
+## 🧰 Stack
+
+FastAPI · React · PostgreSQL · Redis · Docker
+
 ## 📸 Capturas
+
+> Capturas próximamente. Incluiremos dashboard, hallazgos y asistente de importación.
 
 ## 🚀 Inicio rápido
 
@@ -79,6 +85,10 @@ docker compose up -d
 ### 4. Abrir
 
 Ir a [http://localhost:5173](http://localhost:5173), registrar un usuario y comenzar.
+
+**Puertos por defecto (Docker Compose):**
+- UI: `http://localhost:5173`
+- API: `http://localhost:8001`
 
 ## 📚 Catálogo de vulnerabilidades (opcional)
 
@@ -149,7 +159,7 @@ cd worker && python worker.py
 - [ ] Generación de reportes PDF
 - [ ] Adaptadores de escaneo adicionales (Nmap, OpenVAS, Trivy)
 - [ ] Cobertura de tests
-- [ ] React Router + modularización de componentes
+- [ ] UI responsive/mobile
 
 ## 📋 Roadmap
 
