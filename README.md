@@ -3,16 +3,16 @@
 </p>
 
 <p align="center">
-  <strong>Open Source Vulnerability Management Platform</strong><br>
-  Built for penetration testing teams and cybersecurity consultants
+  <strong>Plataforma open source de gestión de vulnerabilidades</strong><br>
+  Hecha para equipos de pentesting y consultores de ciberseguridad
 </p>
 
 <p align="center">
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-features">Features</a> •
-  <a href="#-screenshots">Screenshots</a> •
-  <a href="#-documentation">Docs</a> •
-  <a href="#-contributing">Contributing</a>
+  <a href="#-inicio-rapido">Inicio rápido</a> •
+  <a href="#-caracteristicas">Características</a> •
+  <a href="#-capturas">Capturas</a> •
+  <a href="#-documentacion">Documentación</a> •
+  <a href="#-contribuir">Contribuir</a>
 </p>
 
 <p align="center">
@@ -25,74 +25,74 @@
 
 ---
 
-## 🔍 What is VulnInventory?
+## 🔍 ¿Qué es VulnInventory?
 
-VulnInventory is a vulnerability management platform designed for cybersecurity consultants and pentesting teams. It centralizes findings, assets, and scans across multiple clients and projects.
+VulnInventory es una plataforma de gestión de vulnerabilidades diseñada para consultores de ciberseguridad y equipos de pentesting. Centraliza hallazgos, activos y escaneos entre múltiples clientes y proyectos.
 
-- **Free and open source** — No licensing fees, no vendor lock-in
-- **Multi-tenant** — Manage multiple clients/organizations securely
-- **Import-friendly** — Nessus, Qualys, Burp, SARIF, CSV, JSON
-- **CVE-aware** — Built-in vulnerability catalog with NVD integration
-- **Consultant-focused** — Built by pentesters, for pentesters
+- **Gratis y open source** — Sin licencias ni lock‑in
+- **Multi‑tenant** — Gestión segura de múltiples organizaciones
+- **Importación fácil** — Nessus, Qualys, Burp, SARIF, CSV, JSON
+- **CVE‑aware** — Catálogo de vulnerabilidades con integración NVD
+- **Enfocado en consultores** — Hecho por pentesters, para pentesters
 
-## ✨ Features
+## ✨ Características
 
-| Category | Details |
+| Categoría | Detalles |
 |----------|---------|
-| **Findings** | Full lifecycle management, CVSS scoring, CWE/OWASP, comments, assignments |
-| **Assets** | Per-project tracking, environment/criticality tagging, associations |
-| **Scans** | Queue-based with Wapiti, Nuclei, OSV Scanner, VulnAPI |
+| **Hallazgos** | Ciclo de vida completo, CVSS, CWE/OWASP, comentarios, asignaciones |
+| **Activos** | Tracking por proyecto, tags de ambiente/criticidad, asociaciones |
+| **Escaneos** | Cola con Wapiti, Nuclei, OSV Scanner, VulnAPI |
 | **Import/Export** | CSV, JSON, Nessus XML, Burp XML, SARIF |
-| **VulnDB Catalog** | CVE dictionary, auto-fill forms, custom templates |
-| **Multi-Tenant** | Organizations, projects, roles (Admin/Analyst/Viewer) |
-| **Security** | httpOnly cookies, CSRF protection, scoped API keys, rate limiting |
-| **Audit** | Full trail of all user actions |
+| **VulnDB** | Diccionario CVE, auto‑completar, templates propios |
+| **Multi‑Tenant** | Organizaciones, proyectos, roles (Admin/Analista/Viewer) |
+| **Seguridad** | Cookies httpOnly, CSRF, API keys, rate limiting |
+| **Auditoría** | Trazabilidad de acciones de usuarios |
 
-## 📸 Screenshots
+## 📸 Capturas
 
-## 🚀 Quick Start
+## 🚀 Inicio rápido
 
-### Prerequisites
-- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
+### Requisitos
+- [Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/)
 
-### 1. Clone
+### 1. Clonar
 
 ```bash
 git clone https://github.com/CrisorHacker/vulninventory.git
 cd vulninventory
 ```
 
-### 2. Configure
+### 2. Configurar
 
 ```bash
 cp .env.example .env
-# REQUIRED: Change JWT_SECRET to a random string (min 32 chars)
-# Generate one: python -c "import secrets; print(secrets.token_urlsafe(48))"
+# REQUERIDO: Cambiar JWT_SECRET por una cadena aleatoria (min 32 chars)
+# Generar una: python -c "import secrets; print(secrets.token_urlsafe(48))"
 ```
 
-### 3. Start
+### 3. Iniciar
 
 ```bash
 docker compose up -d
 ```
 
-### 4. Open
+### 4. Abrir
 
-Go to [http://localhost:5173](http://localhost:5173), register an account, and start working.
+Ir a [http://localhost:5173](http://localhost:5173), registrar un usuario y comenzar.
 
-## 📚 Vulnerability Catalog (Optional)
+## 📚 Catálogo de vulnerabilidades (opcional)
 
-VulnInventory **no incluye un catalogo precargado**. Cada equipo carga su propio VulnDB desde una fuente externa.
-El endpoint de importacion espera **JSONL** (un JSON por linea).
+VulnInventory **no incluye un catálogo precargado**. Cada equipo carga su propio VulnDB desde una fuente externa.
+El endpoint de importación espera **JSONL** (un JSON por línea).
 
 ### Importar JSONL o CSV
 
-**Ejemplo minimo (sin datos sensibles):**
+**Ejemplo mínimo (sin datos sensibles):**
 
 - `docs/examples/vulndb_sample.jsonl`
 - `docs/examples/vulndb_sample.csv`
 
-**Script de importacion (acepta JSONL o CSV):**
+**Script de importación (acepta JSONL o CSV):**
 
 ```bash
 API_BASE_URL=http://localhost:8001 \
@@ -107,76 +107,76 @@ API_KEY=TU_API_KEY \
 ./scripts/import_vulndb.sh docs/examples/vulndb_sample.csv
 ```
 
-**Via UI:** Hallazgos → 📚 Catálogo → Importar JSONL → Upload file
+**Vía UI:** Hallazgos → 📚 Catálogo → Importar JSONL → Upload file
 
-### Formato JSONL esperado (un JSON por linea)
+### Formato JSONL esperado (un JSON por línea)
 
 ```json
 {"short_id":"CVE-2024-1234","name":"Example RCE","base_score":9.8,"details":"Remote code execution in example library.","recommendations":"Actualizar a la version 1.2.3","ext_references":["https://example.com/advisory"],"cpe":""}
 ```
 
-Documentacion completa: `docs/vulndb-import.md`.
+Documentación completa: `docs/vulndb-import.md`.
 
-## 🛠️ Development
+## 🛠️ Desarrollo
 
 ```bash
 # Backend
 cd api && python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-# Start DB and Redis: docker compose -f docker-compose.dev.yml up -d
+# Levantar DB y Redis: docker compose -f docker-compose.dev.yml up -d
 uvicorn app.main:app --reload --port 8000
 
-# Frontend (separate terminal)
+# Frontend (terminal separado)
 cd ui && npm install && npm run dev
 
-# Worker (separate terminal)
+# Worker (terminal separado)
 cd worker && python worker.py
 ```
 
-## 📖 Documentation
+## 📖 Documentación
 
-- [Architecture](docs/architecture.md)
+- [Arquitectura](docs/architecture.md)
 - [API Reference](docs/api-reference.md)
 - [Deployment](docs/deployment.md)
 - [Development](docs/development.md)
 
-## 🤝 Contributing
+## 🤝 Contribuir
 
-Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
+¡Contribuciones bienvenidas! Ver [CONTRIBUTING.md](CONTRIBUTING.md).
 
-**Help needed:**
-- [ ] i18n (English UI)
-- [ ] PDF report generation
-- [ ] Additional scan adapters (Nmap, OpenVAS, Trivy)
-- [ ] Test coverage
-- [ ] React Router + component modularization
+**Ayuda necesaria:**
+- [ ] i18n (UI en inglés)
+- [ ] Generación de reportes PDF
+- [ ] Adaptadores de escaneo adicionales (Nmap, OpenVAS, Trivy)
+- [ ] Cobertura de tests
+- [ ] React Router + modularización de componentes
 
 ## 📋 Roadmap
 
-- [x] Multi-tenant organizations
-- [x] Finding lifecycle management
-- [x] Scan queue with worker
+- [x] Organizaciones multi‑tenant
+- [x] Ciclo de vida de hallazgos
+- [x] Cola de escaneos con worker
 - [x] Import/Export (CSV, JSON, Nessus, Burp, SARIF)
 - [x] VulnDB catalog
 - [x] Audit logging
-- [x] httpOnly cookie auth + CSRF
-- [ ] PDF report generation
-- [ ] Slack/Teams notifications
-- [ ] GraphQL API
-- [ ] Plugin system for scan tools
+- [x] Auth con cookies httpOnly + CSRF
+- [ ] Generación de reportes PDF
+- [ ] Notificaciones Slack/Teams
+- [ ] API GraphQL
+- [ ] Sistema de plugins para herramientas de escaneo
 
-## 🔒 Security
+## 🔒 Seguridad
 
-Report vulnerabilities responsibly. See [SECURITY.md](SECURITY.md).
+Reporta vulnerabilidades de forma responsable. Ver [SECURITY.md](SECURITY.md).
 
-**Do NOT open public issues for security vulnerabilities.**
+**No abras issues públicas para vulnerabilidades de seguridad.**
 
-## 📄 License
+## 📄 Licencia
 
-MIT — see [LICENSE](LICENSE).
+MIT — ver [LICENSE](LICENSE).
 
 ---
 
 <p align="center">
-  Made with ❤️ for the cybersecurity community
+  Hecho con ❤️ para la comunidad de ciberseguridad
 </p>
