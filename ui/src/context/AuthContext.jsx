@@ -59,8 +59,13 @@ export function AuthProvider({ children }) {
   }, []);
 
   const logout = useCallback(async () => {
-    await fetch(`${API_BASE}/auth/logout`, { method: "POST", credentials: "include" });
-    setUser(null);
+    try {
+      await fetch(`${API_BASE}/auth/logout`, { method: "POST", credentials: "include" });
+    } catch (error) {
+      console.warn("Logout falló, limpiando sesión local igualmente.", error);
+    } finally {
+      setUser(null);
+    }
   }, []);
 
   const value = useMemo(
