@@ -35,7 +35,7 @@
   padding: 10px 14px;
   border-radius: 12px;
   background: var(--success-bg);
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  border: 1px solid var(--success-border);
   color: var(--text-primary);
   font-size: 13px;
 }

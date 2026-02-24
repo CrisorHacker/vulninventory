@@ -114,17 +114,17 @@
 
 .assets-env--prod {
   color: var(--severity-critical);
-  background: rgba(239, 68, 68, 0.1);
+  background: var(--severity-critical-bg);
 }
 
 .assets-env--stage {
   color: var(--severity-medium);
-  background: rgba(234, 179, 8, 0.1);
+  background: var(--severity-medium-bg);
 }
 
 .assets-env--dev {
   color: var(--severity-low);
-  background: rgba(34, 197, 94, 0.1);
+  background: var(--severity-low-bg);
 }
 
 .assets-tags {
@@ -170,7 +170,7 @@
   height: 100vh;
   background: var(--bg-secondary);
   border-left: 1px solid var(--border-secondary);
-  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-drawer);
   z-index: var(--z-modal);
   overflow-y: auto;
   animation: drawerSlideIn 0.25s ease;

@@ -110,7 +110,7 @@
   font-size: 12px;
   color: var(--success);
   background: var(--success-bg);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border: 1px solid var(--success-border);
 }
 
 .notification-preferences__button {

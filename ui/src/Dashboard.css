@@ -84,7 +84,7 @@
 }
 
 .kpi-icon--assets {
-  background: rgba(139, 92, 246, 0.1);
+  background: var(--accent-secondary-subtle);
   color: var(--accent-secondary);
 }
 

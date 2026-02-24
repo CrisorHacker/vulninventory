@@ -99,7 +99,7 @@
 }
 
 .audit-kpi-icon--users {
-  background: rgba(139, 92, 246, 0.1);
+  background: var(--accent-secondary-subtle);
   color: var(--accent-secondary);
 }
 
@@ -243,7 +243,7 @@
   justify-content: center;
   font-size: 10px;
   font-weight: var(--font-bold);
-  color: white;
+  color: var(--text-on-accent);
 }
 
 .audit-system-badge {
@@ -262,33 +262,33 @@
 }
 
 .audit-method--get {
-  color: #22c55e;
-  background: rgba(34, 197, 94, 0.1);
+  color: var(--success);
+  background: var(--success-bg);
 }
 
 .audit-method--post {
-  color: #3b82f6;
-  background: rgba(59, 130, 246, 0.1);
+  color: var(--info);
+  background: var(--info-bg);
 }
 
 .audit-method--patch {
-  color: #eab308;
-  background: rgba(234, 179, 8, 0.1);
+  color: var(--warning);
+  background: var(--warning-bg);
 }
 
 .audit-method--delete {
-  color: #ef4444;
-  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+  background: var(--error-bg);
 }
 
 .audit-method--options {
-  color: #94a3b8;
-  background: rgba(148, 163, 184, 0.1);
+  color: var(--text-secondary);
+  background: var(--bg-badge);
 }
 
 .audit-method--put {
-  color: #f97316;
-  background: rgba(249, 115, 22, 0.1);
+  color: var(--severity-high);
+  background: var(--severity-high-bg);
 }
 
 .audit-cell-path {
@@ -340,7 +340,7 @@
   height: 100vh;
   background: var(--bg-secondary);
   border-left: 1px solid var(--border-secondary);
-  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-drawer);
   z-index: var(--z-modal);
   overflow-y: auto;
   animation: drawerSlideIn 0.25s ease;
@@ -389,12 +389,12 @@
 
 .audit-drawer-status--ok {
   background: var(--success-bg);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid var(--success-border);
 }
 
 .audit-drawer-status--error {
   background: var(--error-bg);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  border: 1px solid var(--error-border);
 }
 
 .audit-drawer-status-code {
@@ -463,7 +463,7 @@
 .audit-terminal {
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-card);
 }
 
 .audit-terminal-bar {
@@ -471,8 +471,8 @@
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  background: #1a1a2e;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--terminal-header-bg);
+  border-bottom: 1px solid var(--border-card);
 }
 
 .dot {
@@ -481,9 +481,9 @@
   border-radius: 50%;
 }
 
-.dot.red { background: #ef4444; }
-.dot.yellow { background: #eab308; }
-.dot.green { background: #22c55e; }
+.dot.red { background: var(--severity-critical); }
+.dot.yellow { background: var(--severity-medium); }
+.dot.green { background: var(--severity-low); }
 
 .audit-terminal-name {
   font-family: var(--font-mono);
@@ -493,8 +493,8 @@
 }
 
 .audit-terminal-output {
-  background: #08080f;
-  color: #4ade80;
+  background: var(--terminal-bg);
+  color: var(--terminal-text);
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 1.7;

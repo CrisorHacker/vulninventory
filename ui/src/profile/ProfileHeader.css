@@ -32,7 +32,7 @@
   font-size: 28px;
   font-weight: 600;
   color: var(--text-primary);
-  background: linear-gradient(135deg, #0ea5e9, var(--accent-primary));
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   width: 100%;
   height: 100%;
   display: grid;

@@ -2,7 +2,7 @@ services:
   api:
     build: ./api
     ports:
-      - "8000:8000"
+      - "8001:8000"
     env_file: .env
     depends_on:
       db:
@@ -22,7 +22,9 @@ services:
   ui:
     build: ./ui
     ports:
-      - "5173:80"
+      - "5173:5173"
+    environment:
+      VITE_API_BASE_URL: "http://localhost:8001"
     depends_on:
       - api
     restart: unless-stopped

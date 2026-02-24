@@ -15,7 +15,7 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border-secondary);
   border-radius: var(--radius-lg);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-md);
   z-index: var(--z-dropdown);
   min-width: 180px;
   overflow: hidden;
@@ -116,7 +116,7 @@
 
 .import-errors {
   background: var(--error-bg);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  border: 1px solid var(--error-border);
 }
 
 .import-errors p {
@@ -126,7 +126,7 @@
 
 .import-warnings {
   background: var(--warning-bg);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  border: 1px solid var(--warning-border);
 }
 
 .import-warnings p {

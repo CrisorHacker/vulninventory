@@ -7,6 +7,13 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (function () {
+        var saved = localStorage.getItem("vulninventory-theme");
+        var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
