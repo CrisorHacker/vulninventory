@@ -90,10 +90,14 @@ def resolve_principal(request: Request, db: Session = Depends(get_db)) -> Princi
                 detail={"code": "password_expired", "message": "Debe actualizar su contraseña"},
             )
         if not user.profile_completed:
-            raise HTTPException(
-                status_code=403,
-                detail={"code": "profile_incomplete", "message": "Debe completar su perfil"},
-            )
+            allowed_paths = {"/orgs"}
+            if request.url.path in allowed_paths and request.method in {"GET", "POST"}:
+                pass
+            else:
+                raise HTTPException(
+                    status_code=403,
+                    detail={"code": "profile_incomplete", "message": "Debe completar su perfil"},
+                )
         memberships = db.query(models.Membership).filter(models.Membership.user_id == user.id).all()
         org_ids = {m.organization_id for m in memberships}
         roles = {m.role for m in memberships if m.role}
