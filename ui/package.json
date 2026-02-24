@@ -9,13 +9,14 @@
     "preview": "vite preview --host 0.0.0.0 --port 5173"
   },
   "dependencies": {
+    "esbuild": "^0.27.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-router-dom": "^7.13.1",
     "recharts": "^3.7.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "4.3.4",
-    "vite": "5.4.11"
+    "@vitejs/plugin-react": "^5.1.4",
+    "vite": "^7.3.1"
   }
 }
