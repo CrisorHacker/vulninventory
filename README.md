@@ -68,6 +68,12 @@ FastAPI · React · PostgreSQL · Redis · Docker
 ### Requisitos
 - [Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/)
 
+### Validaciones rápidas
+```bash
+docker --version
+docker compose version
+```
+
 ### 1. Clonar
 
 ```bash
@@ -96,6 +102,22 @@ Ir a [http://localhost:5173](http://localhost:5173), registrar un usuario y come
 **Puertos por defecto (Docker Compose):**
 - UI: `http://localhost:5173`
 - API: `http://localhost:8001`
+
+### Verificar servicios
+
+```bash
+docker compose ps
+```
+
+### Datos de demo (opcional)
+
+```bash
+docker compose exec -T api python -m app.seed_demo
+```
+
+Usuario demo:
+- Email: `demo@example.com`
+- Password: `DemoSegura123`
 
 ## 📚 Catálogo de vulnerabilidades (opcional)
 
