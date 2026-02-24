@@ -1,3 +1,7 @@
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![Python 3.12+](https://img.shields.io/badge/Python-3.12+-green.svg)
+![Docker Ready](https://img.shields.io/badge/Docker-Ready-blue.svg)
+
 <p align="center">
   <h1 align="center">🛡️ VulnInventory</h1>
 </p>
